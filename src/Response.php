@@ -97,15 +97,16 @@ class Response extends Collection
         if ($code < 100 || $code > 399) {
             $this->error('Response With Errors', $this->toLog());
 
+            $errorObject = json_decode($this->getResponseRaw());
             if (array_key_exists($code, static::$statusTexts)) {
-                $message = static::$statusTexts[$code];
+                $errorObject->responseStatus = static::$statusTexts[$code];
             } else {
-                $message = 'Unknow Error ('.$code.')';
+                $errorObject->responseStatus = 'Unknow Error ('.$code.')';
             }
+            $message = json_encode($errorObject);
 
             throw new RequestException($message, $code);
         }
-
         return true;
     }
 
