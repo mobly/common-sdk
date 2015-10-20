@@ -98,6 +98,9 @@ class Response extends Collection
             $this->error('Response With Errors', $this->toLog());
 
             $errorObject = json_decode($this->getResponseRaw());
+            if (!is_object($errorObject)) {
+                  $errorObject = new \stdClass();
+            }
             if (array_key_exists($code, static::$statusTexts)) {
                 $errorObject->responseStatus = static::$statusTexts[$code];
             } else {
