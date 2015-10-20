@@ -48,7 +48,7 @@ abstract class ManagerAbstract extends ClientManagerAbstract
             return $this->update($entity, $existent);
         }
 
-        return $this->execute($this->factoryMap($route), $entity->toJson($route));
+        return $this->execute($this->factoryMap($route, []), $entity->toJson($route));
     }
 
     /**
